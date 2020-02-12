@@ -5,7 +5,7 @@ import java.util.HashSet;
 public class ThirdMaxNumber {
 
 	public static void main(String[] args) {
-		int[] num = {1, 2, 3};
+		int[] num = {1, 2, 3, 2};
 		System.out.println(getThirdMaxNumber(num));
 	}
 	
