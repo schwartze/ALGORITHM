@@ -3,7 +3,7 @@ package algorithm;
 public class ArrangingCoins {
 
 	public static void main(String[] args) {
-		System.out.println(arrangeCoins(8));
+		System.out.println(arrangeCoins_Math(8));
 	}
 	
 	public static int arrangeCoins(int n) {
@@ -22,5 +22,10 @@ public class ArrangingCoins {
 		}
 		
 		return count;
+	}
+	
+	public static int arrangeCoins_Math(int n) {
+		
+		return (int)((Math.sqrt(8.0 * n + 1) - 1) / 2);
 	}
 }
