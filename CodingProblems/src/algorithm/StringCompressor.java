@@ -5,8 +5,8 @@ import java.util.HashMap;
 public class StringCompressor {
 
 	public static void main(String[] args) {
-		char[] charArr = {'a', 'a', 'b', 'b', 'c', 'c', 'c'};
-		System.out.println(compresseString(charArr));
+		char[] charArr = {'a', 'a', 'b', 'b', 'a', 'a', 'a'};
+		System.out.println(compressor(charArr));
 	}
 	
 	// the given array of characters {a, a, b, b, c, c, c}
@@ -22,4 +22,30 @@ public class StringCompressor {
 		
 		return map.size() * 2;
 	}
+
+	// the above solution doesn't work when the given char array are like this: {a, a, b, b, a, a, a}
+	// another solution using two pointers
+	public static int compressor(char[] charArray) {
+		int index = 0; 
+		int result = 0;
+		
+		while (index < charArray.length) {
+			
+			char currentChar = charArray[index];
+			int count = 0;
+			
+			while (index < charArray.length && charArray[index] == currentChar) {
+				index++;
+				count++;
+			}
+			
+			charArray[result++] = currentChar;
+			
+			for (char c : Integer.toString(count).toCharArray())
+				charArray[result++] = c;
+		}
+		
+		return result;
+	}
+
 }
