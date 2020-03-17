@@ -4,7 +4,7 @@ public class KeyFormatting {
 
 	public static void main(String[] args) {
 		KeyFormatting theFormatter = new KeyFormatting();
-		String result = theFormatter.getKeyInFormat("2-5G-3J", 2);
+		String result = theFormatter.keyFormatter("2-5G-3J", 2);
 		System.out.println(result);
 	}
 	
@@ -53,5 +53,19 @@ public class KeyFormatting {
 		}
 	
 		return result.substring(0, result.length() - 1);
+	}
+
+	
+	public String keyFormatter(String S, int K) {
+		
+		StringBuilder sb = new StringBuilder();
+		
+		for (int i = S.length() - 1; i >= 0; i--) {
+			
+			if (S.charAt(i) != '-')
+				sb.append(sb.length() % (K + 1) == K ? '-' : "").append(S.charAt(i));
+		}
+		
+		return sb.reverse().toString().toUpperCase();
 	}
 }
