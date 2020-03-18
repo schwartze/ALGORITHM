@@ -57,4 +57,16 @@ public class ConstructRectangle {
 		
 		return new int[] {num / list.get(j), list.get(j)};
 	}
+
+	
+	public int[] constructRectangle2(int area) {
+		
+		int width = (int)Math.sqrt(area);
+		
+		while (area % width != 0)
+			width--;
+		
+		return new int[] {area / width, width};
+	}
+
 }
