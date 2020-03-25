@@ -8,6 +8,9 @@ public class PerfectNumber {
 		System.out.println(result);
 	}
 	
+	// A perfect number is a positive integer 
+	// that is equal to the sum of all its positive divisor
+	// except itself.
     public boolean isPerfectNumber(int num) {
      
     	int result = 1;
@@ -17,12 +20,11 @@ public class PerfectNumber {
     	while (n > 1) {
     		
     		if (num % n == 0) {
-    			result += n;
-    			result += (num / n);
+    			result += n + (num / n);
     		}
     		n--;
     	}
     	
-    	return result == num ? true : false;
+    	return result == num;
     }
 }
