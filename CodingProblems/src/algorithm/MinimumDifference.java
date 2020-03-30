@@ -28,11 +28,8 @@ public class MinimumDifference {
 		for (int i = 0; i < nodeValueList.size(); i++) {
 			
 			for (int j = i + 1; j < nodeValueList.size() - 1; j++) {
-
-				int diff = nodeValueList.get(i) - nodeValueList.get(j);
 				
-				if (Math.abs(diff) < minDiff)
-					minDiff = Math.abs(diff);
+				minDiff = Math.min(minDiff, nodeValueList.get(i) - nodeValueList.get(j));
 			}
 		}
 		return minDiff;
@@ -48,4 +45,29 @@ public class MinimumDifference {
 
 		set.add(node.val);
 	}
+	
+	// another solution using two global variables 
+	// only need to compare adjacent values of a node 
+	// because that is when the absolute value of the difference 
+	// can be smallest
+	int min = Integer.MAX_VALUE;
+	Integer prev = null;
+	
+	public int getMinimumDifference(TreeNode root) {
+		
+		if (root == null)
+			return min;
+		
+		getMinimumDifference(root.left);
+		
+		if (prev != null)
+			min = Math.min(min, root.val - prev);
+		
+		prev = root.val;
+		
+		getMinimumDifference(root.right);
+		
+		return min;
+	}
+
 }
