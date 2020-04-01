@@ -1,7 +1,6 @@
 package algorithm;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.Stack;
 
 public class ConvertToGreaterTree {
 	
@@ -17,6 +16,9 @@ public class ConvertToGreaterTree {
 		System.out.println(root.right.val);
 	}
 	
+	// A greater tree is that every value of each node is changed 
+	// to the original key plus sum of all keys greater than
+	// the original key in the tree
 	public TreeNode toGreaterTree(TreeNode root) {
 
 		if (root == null)
@@ -39,4 +41,28 @@ public class ConvertToGreaterTree {
 		node.val = sum;
 		helper(node.left);
 	}
+
+	// iterative method
+	public TreeNode convertTree(TreeNode root) {
+		int sum = 0;
+		TreeNode node = root;
+		Stack<TreeNode> stack = new Stack<>();
+		
+		while (!stack.isEmpty() || node != null) {
+			
+			while (node != null) {
+				stack.push(node);
+				node = node.right;
+			}
+			
+			node = stack.pop();
+			sum += node.val;
+			node.val = sum;
+			
+			node = node.left;
+		}
+		
+		return root;
+	}
+	
 }
