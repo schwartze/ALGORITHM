@@ -16,6 +16,7 @@ public class DiameterOfBinaryTree {
 		System.out.println(result);
 		
 	}
+	int max = 0;
 	int count = 0;
 	
 	public void helper(TreeNode root) {
@@ -30,11 +31,25 @@ public class DiameterOfBinaryTree {
 		helper(root.right);
 	}
 	
+	
 	public int getDiameterOfTree(TreeNode root) {
 		
-		helper(root.left);
-		helper(root.right);
+		maxDepth(root);
 		
-		return count;
+		return max;
 	}
+	
+	private int maxDepth(TreeNode node) {
+		
+		if (node == null)
+			return 0;
+		
+		int left = maxDepth(node.left);
+		int right = maxDepth(node.right);
+			
+		max = Math.max(max, left + right);
+		
+		return Math.max(left, right) + 1;
+	}
+
 }
