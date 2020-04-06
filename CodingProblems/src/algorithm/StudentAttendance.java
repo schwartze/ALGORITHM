@@ -40,4 +40,16 @@ public class StudentAttendance {
 		return lateCount > 2 ? false : true;
 	}
 	
+	
+	public boolean checkRecord(String s) {
+		
+		return !s.contains("LLL") && s.indexOf("A") == s.lastIndexOf("A");
+	}
+	
+	public boolean checkAttendanceRecord(String s) {
+		
+		String temp = s.replace("A", "");
+		
+		return !s.contains("LLL") || s.length() - temp.length() < 2 ? false: true;
+	}
 }
