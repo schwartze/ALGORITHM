@@ -115,6 +115,24 @@ public class MaxDepth {
 		
 		return depth;
 	}
+	
+	public int findMaxDepth(Node root) {
+		
+		if (root == null)
+			return 0;
+		
+		int max = 0;
+		for (Node child : root.children) {
+			int value = findMaxDepth(child);
+			
+			if (value > max)
+				max = value;
+			
+			// value = Math.max(value, findMaxDepth(child));
+		}
+		
+		return max + 1;
+	}
 }
 
 
