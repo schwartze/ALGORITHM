@@ -23,14 +23,19 @@ public class ArrayPartition {
     	
     	int result = 0;
     	
-    	for (int i = 0; i < nums.length; i++) {
-    		
-    		if (i % 2 != 0)
-    			continue;
-    		
+    	// for (int i = 0; i < nums.length; i++) {
+    	// 	if (i % 2 != 0)
+    	// 		continue;
+    	// 	result += nums[i];
+    	// }
+     
+    	// another way of writing for statement which gives the same answer
+    	for (int i = 0; i < nums.length; i += 2) {
     		result += nums[i];
-    	}
+    	 }
     	
     	return result;
     }
+    
+    
 }
