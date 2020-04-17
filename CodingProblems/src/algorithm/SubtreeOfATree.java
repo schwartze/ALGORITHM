@@ -22,34 +22,29 @@ public class SubtreeOfATree {
 		boolean result = subtree.isSubtree(root1, root2);
 		System.out.println(result);
 	}
-	
+	// t is a subtree of s only if they have the same structure and values for nodes 
     public boolean isSubtree(TreeNode s, TreeNode t) {
     	
-    	List<Integer> list1 = new ArrayList<>();
-    	List<Integer> list2 = new ArrayList<>();
+    	StringBuffer treeS = new StringBuffer();
+    	StringBuffer treeT = new StringBuffer();
     	
-    	scanTree(s, list1);
-    	scanTree(t, list2);
+    	preorder(s, treeS);
+    	preorder(t, treeT);
 
-    	List<Integer> temp = list1.subList(list1.indexOf(list2.get(0)), list2.size() + 1);
-    	
-    	for (int i = 0; i < temp.size(); i++) {
-    		if (temp.get(i) != list2.get(i))
-    			return false;
-    	}
-    	
-    	return true;
+    	return treeS.toString().indexOf(treeT.toString()) >= 0;
     }
 
-	private void scanTree(TreeNode s, List<Integer> list) {
+	private String preorder(TreeNode node, StringBuffer sb) {
 		
-		if (s == null)
-			return;
+		if (node == null)
+			return "null ";
 		
-		list.add(s.val);
+		sb.append("#" + node.val + " ");
 		
-		scanTree(s.left, list);
-		scanTree(s.right, list);
+		preorder(node.left, sb);
+		preorder(node.right, sb);
+		
+		return sb.toString();
 	}
 
 }
