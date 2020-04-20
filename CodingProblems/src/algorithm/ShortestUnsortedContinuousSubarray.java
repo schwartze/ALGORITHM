@@ -1,12 +1,14 @@
 package algorithm;
 
+import java.util.Arrays;
+
 public class ShortestUnsortedContinuousSubarray {
 
 	public static void main(String[] args) {
 		ShortestUnsortedContinuousSubarray sucs = new ShortestUnsortedContinuousSubarray();
 		int[] nums = {2, 6, 4, 8, 10, 9, 15};
 		
-		int result = sucs.findUnsortedSubarray(nums);
+		int result = sucs.findUnsortedSubarray2(nums);
 		System.out.println(result);
 	}
 	/*
@@ -40,6 +42,34 @@ public class ShortestUnsortedContinuousSubarray {
     			endIdx = i;
     	}
     	
-    	return endIdx - begIdx + 1;
+    	return (endIdx - begIdx + 1 == nums.length) ? 0 : endIdx - begIdx + 1;
+    }
+    
+    public int findUnsortedSubarray2(int[] nums) {
+    	
+    	int[] temp = nums.clone();
+    	
+    	Arrays.sort(temp);
+    	int begIdx = 0;
+    	int endIdx = 0;
+    	// {2, 6, 4, 8, 10, 9, 15}
+    	// {2, 4, 6, 8, 9, 10, 15}
+    	for (int i = 0; i < nums.length; i++) {
+    		
+    		if (nums[i] != temp[i]) {
+    			begIdx = i;
+    			break;
+    		}
+    	}
+    	
+    	for (int j = nums.length - 1; j >= 0; j--) {
+    		
+    		if (nums[j] != temp[j]) {
+    			endIdx = j;
+    			break;
+    		}
+    	}
+    	
+    	return (endIdx == 0 && begIdx == 0) ? 0 : endIdx - begIdx + 1;
     }
 }
