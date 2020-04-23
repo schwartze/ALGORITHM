@@ -2,6 +2,7 @@ package algorithm;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class NaryTreePostorder {
 
@@ -19,12 +20,13 @@ public class NaryTreePostorder {
 		left.children.add(new Node(6));
 		
 		NaryTreePostorder naryTree = new NaryTreePostorder();
-		List<Integer> list = naryTree.postorder(root);
+		List<Integer> list = naryTree.postorderTraverse(root);
 
 		for (int n : list)
 			System.out.print(n + ", ");
 	}
 	
+	// #1 : recursive solution
 	public List<Integer> postorder(Node node) {
 		List<Integer> result = new ArrayList<>();
 		
@@ -46,5 +48,27 @@ public class NaryTreePostorder {
 			helper(n, list);
 			list.add(n.val);
 		}
+	}
+	
+	// #2: iterative solution
+	public List<Integer> postorderTraverse(Node node) {
+		
+		List<Integer> result = new ArrayList<>();
+		Stack<Node> stack = new Stack<>();
+		
+		stack.push(node);
+		
+		while (!stack.isEmpty()) {
+			Node temp = stack.pop();
+			result.add(temp.val);
+			
+			if (temp.children == null)
+				continue;
+			
+			for (Node n : temp.children) {
+				stack.push(n);
+			}
+		}
+		return result;
 	}
 }
