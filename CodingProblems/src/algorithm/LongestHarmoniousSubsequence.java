@@ -15,9 +15,7 @@ public class LongestHarmoniousSubsequence {
 	
 	public int findLHS(int[] nums) {
 
-		Arrays.sort(nums);
-		
-		// put all nums in map with value of its count
+		// put all nums in map with value as its count
 		HashMap<Integer, Integer> map = new HashMap<>();
 		
 		for (int n : nums) {
@@ -25,32 +23,14 @@ public class LongestHarmoniousSubsequence {
 			map.put(n, ++count);
 		}
 		
-		// find which num appears the most in the array
+		// find the length of longest subsequence
 		int keyCount = 0;
-		int key = 0;
 		
-		for (int n : map.keySet()) {
-			if (map.get(n) > keyCount) {
-				keyCount = map.get(n);
-				key = n;
-			}
-		}
-		
-		// find the num which is greater than key by 1,
-		// or is smaller than key by 1
-		// and add its count into counts of key
-		if (map.containsKey(map.getOrDefault(key - 1, 0)) || 
-				map.containsKey(map.getOrDefault((key + 1), 0))) {
-			int smaller = map.getOrDefault(key - 1, 0);
-			int greater = map.getOrDefault((key + 1), 0);
+		for (int key : map.keySet()) {
 			
-			if (smaller > greater)
-				keyCount += smaller;
-			else 
-				keyCount += greater;
+			if (map.containsKey(key + 1))
+				keyCount = Math.max(keyCount, (map.get(key + 1) + map.get(key)));
 		}
-		
 		return keyCount;
 	}
-	
 }
