@@ -9,6 +9,8 @@ public class AlternatingBits {
 	}
 	// check if given number n has alternating bits 
 	// meaning that two adjacent bits always have different values 
+	
+	// #1: using for statement
 	public boolean isAlternating(int n) {
 		String bitStr = Integer.toBinaryString(n);
 		
@@ -21,5 +23,11 @@ public class AlternatingBits {
 		}
 		
 		return true;
+	}
+	
+	// #2: using bit operation
+	public boolean hasAlternatingBits(int n) {
+		
+		return ((n & (n >> 1)) == 0) && (n & n >> 2) == (n >> 2);
 	}
 }
