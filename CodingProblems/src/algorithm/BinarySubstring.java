@@ -4,7 +4,7 @@ public class BinarySubstring {
 
 	public static void main(String[] args) {
 		BinarySubstring bSubstring = new BinarySubstring();
-		int n = bSubstring.getSubstring("00110011");
+		int n = bSubstring.getSubstring("10101");
 		System.out.println(n);
 	}
 	
@@ -12,22 +12,27 @@ public class BinarySubstring {
 	public int getSubstring(String s) {
 		
 		StringBuilder sb = new StringBuilder();
-		StringBuilder temp1 = new StringBuilder();
-		
-		for (int i = 0; i < s.length() - 1; i++) {
-			temp1.append(s.charAt(i));
+
+		for (int i = 0; i < s.length() - 1; i++ ) {
+			StringBuilder temp1 = new StringBuilder();
 			
-			if (s.charAt(i) != s.charAt(i + 1)) {
+			for (int j = i; j < s.length() - 1; j++) {
+				temp1.append(s.charAt(j));
 				
-				StringBuilder temp2 = new StringBuilder();
-				
-				for (int j = i + 1; j < temp1.length() + i + 1; j++) 
-						temp2.append(s.charAt(j));
+				if (s.charAt(j) != s.charAt(j + 1)) {
+					StringBuilder temp2 = new StringBuilder();
 					
-				if (temp1.length() <= temp2.length())
-					sb.append(temp1).append(temp2.substring(0, temp1.length()) + "-");
+					for (int k = j + 1; k < temp1.length() + j + 1; k++) {
+						temp2.append(s.charAt(k));
+					}
+					
+					if (temp1.length() <= temp2.length()) {
+						sb.append(temp1).append(temp2).append("_");
+						break;
+					}
+				}
 			}
 		}
-		return sb.toString().split("-").length;
+		return sb.toString().split("_").length;
 	}
 }
