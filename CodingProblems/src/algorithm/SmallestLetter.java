@@ -32,4 +32,15 @@ public class SmallestLetter {
         }
     	return (char)min;
     }
+    
+    // since the given char array will be sorted 
+    public char nextGreatestLetter2(char[] letters, char target) {
+    	
+    	for (char c : letters) {
+    		
+    		if (c > target)
+    			return c;
+    	}
+    	return letters[0];
+    }
 }
