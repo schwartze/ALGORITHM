@@ -8,7 +8,7 @@ import java.util.Map;
 public class Permutation {
 
 	public static void main(String[] args) {
-		String S = "a1b2";
+		String S = "a1b2c3";
 		Permutation permutator = new Permutation();
 		List<String> res = permutator.letterCasePermutation(S);
 		
@@ -27,28 +27,27 @@ public class Permutation {
     			map.put(i, lowerS.charAt(i));
     	}
 
-    	int size = (int) Math.pow(map.size(), 2);
-    	
-    	List<String> list = new ArrayList<>(size);
-    	
+    	List<String> list = new ArrayList<>();
+    	list.add(S);
 
 		for (int n : map.keySet()) {
-    		StringBuffer temp = new StringBuffer(S);
-			// lowercase
-			char c = map.get(n);
-			temp.setCharAt(n, c);
 			
-			if (!list.contains(temp.toString())) 
-				list.add(temp.toString());
-			
-			// uppercase
-			char c2 = (char)(c - 32);
-			temp.setCharAt(n, c2);
-			
-			if (!list.contains(temp.toString())) 
-				list.add(temp.toString());
+			for (int i = 0; i < list.size(); i++) {
+				StringBuffer temp = new StringBuffer(list.get(i));
+				char c = map.get(n);
+
+				for (int j = 0; j < 2; j++) {
+					
+					if (j == 0) 
+						temp.setCharAt(n, c);
+					else 
+						temp.setCharAt(n, (char)(c - 32));
+					
+					if (!list.contains(temp.toString()))
+						list.add(temp.toString());
+				}
+			}
 		}
-    	
     	return list;
     }
 }
