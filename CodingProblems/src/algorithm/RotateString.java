@@ -16,6 +16,9 @@ public class RotateString {
 	// Return True if and only if A can become B after some number of shifts on A.
 	public boolean rotateString(String A, String B) {
     	
+		if (B.equals(""))
+			return true;
+		
     	StringBuffer temp = new StringBuffer(A);
 
     	for (int i = 0; i < A.length(); i++) {
@@ -29,4 +32,9 @@ public class RotateString {
     	return false;
     }
 	
+	public boolean rotateString2(String A, String B) {
+		
+		// because all rotations of A are contained in A + A
+		return A.length() == B.length() && (A + A).contains(B);
+	}
 }
