@@ -20,6 +20,10 @@ public class LargestElement {
 	
 }
 
+/*
+ * Design a class to find the kth largest element in a stream. 
+ * Note that it is the kth largest element in the sorted order, not the kth distinct element.
+ */
 class KthLargest {
 	int k;
 	int[] arr;

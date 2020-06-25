@@ -6,7 +6,7 @@ import java.util.List;
 public class LargeGroup {
 
 	public static void main(String[] args) {
-		String S = "abbxxxxzzy";
+		String S = "aa";
 		LargeGroup lGroup = new LargeGroup();
 		List<List<Integer>> res = lGroup.largeGroupPositions(S);
 		
@@ -28,7 +28,7 @@ public class LargeGroup {
     		pos.add(i);
     		
     		int j = i + 1;
-    		while (S.charAt(i) == S.charAt(j)) {
+    		while (j < S.length() && S.charAt(i) == S.charAt(j)) {
     			j++;
     		}
     		pos.add(j - 1);
@@ -38,7 +38,6 @@ public class LargeGroup {
     			i = j - 1;
     		}
     	}
-    	
     	return res;
     }
 }
