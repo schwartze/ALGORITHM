@@ -11,7 +11,7 @@ public class LargestPerimeter {
 				};
 	
 		LargestPerimeter triangle = new LargestPerimeter();
-		int res = triangle.largestPerimeter(A);
+		int res = triangle.largestPerimeter2(A);
 		System.out.println(res);
 	}
 	
@@ -54,5 +54,18 @@ public class LargestPerimeter {
     		return false;
     	
     	return true;
+    }
+    
+    
+    public int largestPerimeter2(int[] A) {
+    	
+    	// #1. To find the largest perimeter: a <= b <= c
+    	// #2. It has to form a triangle: a + b > c 
+    	
+    	for (int i = A.length - 3; i >= 0; i--) 
+    		if (A[i] + A[i + 1] > A[i + 2])
+    			return A[i] + A[i + 1] + A[i + 2];
+    	
+    	return 0;
     }
 }
