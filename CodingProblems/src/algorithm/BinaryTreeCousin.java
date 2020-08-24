@@ -11,9 +11,9 @@ public class BinaryTreeCousin {
 		root.right = new TreeNode(3);
 		
 		root.left.right= new TreeNode(4);
-// 		root.right.right= new TreeNode(5);
+ 		root.right.right= new TreeNode(5);
 		
-		int x = 2, y = 3;
+		int x = 5, y = 4;
 		BinaryTreeCousin btCousin = new BinaryTreeCousin();
 		boolean res = btCousin.isCousins(root, x, y);
 		System.out.println(res);
@@ -27,15 +27,24 @@ public class BinaryTreeCousin {
 
     	map.put(root.val, 0);
     	helper(root, map);
-    	boolean hasSameParent = false;
-		int xParent = map.get(x) - 1;
-		int yParent = map.get(y) - 1;
+
+    	hasSameParent(root, x, y);
     	
-    	for (int n : map.keySet()) 
-    		if (map.get(n) == xParent && map.get(n) == yParent)
-    			hasSameParent = true;
+    	return map.get(x) == map.get(y) && !hasSameParent(root, x, y);
+    }
+    
+    private boolean hasSameParent(TreeNode node, int x, int y) {
     	
-    	return !hasSameParent && map.get(x) == map.get(y);
+    	if (node == null)
+    		return false;
+    	
+    	if (node.left != null && node.right != null) {
+    		if ((node.left.val == x && node.right.val == y) || 
+    				(node.left.val == y && node.right.val == x))
+    			return true;
+    	}
+
+    	return hasSameParent(node.left, x, y) || hasSameParent(node.right, x, y);
     }
     
     private void helper(TreeNode node, Map<Integer, Integer> map) {
