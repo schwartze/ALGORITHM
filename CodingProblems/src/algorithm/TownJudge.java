@@ -8,7 +8,7 @@ import java.util.Set;
 public class TownJudge {
 
 	public static void main(String[] args) {
-		int N = 3;
+		int N = 4;
 		int[][] trust = {
 				{1, 3},
 				{1, 4},
@@ -18,11 +18,14 @@ public class TownJudge {
 				};
 		
 		TownJudge townJudge = new TownJudge();
-		int res = townJudge.findJudge(N, trust);
+		int res = townJudge.findJudge2(N, trust);
 		System.out.println(res);
 	}
 	
     public int findJudge(int N, int[][] trust) {
+    	if (trust.length < 1)
+    		return N == 1 ? N : -1;
+    	
     	int judge = 0;
     	Map<Integer, Integer> map = new HashMap<>();
     	Set<Integer> set = new HashSet<>();
@@ -47,5 +50,21 @@ public class TownJudge {
     			judge = -1;
     	
     	return judge;
+    }
+    
+    public int findJudge2(int N, int[][] trust) {
+    	
+    	int[] count = new int[N + 1];
+    	
+    	for (int[] pair : trust) {
+    		count[pair[0]]--;
+    		count[pair[1]]++;
+    	}
+    	
+    	for (int i = 1; i < N + 1; i++) 
+    		if (count[i] == N - 1)
+    			return i;
+    	
+    	return -1;
     }
 }
