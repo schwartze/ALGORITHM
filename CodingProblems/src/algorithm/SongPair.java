@@ -9,7 +9,7 @@ public class SongPair {
 		int[] time = {30, 20, 150, 100, 40};
 		
 		SongPair sPair = new SongPair();
-		int res = sPair.numPairsDivisibleBy60(time);
+		int res = sPair.numPairsDivisibleBy60_2(time);
 		System.out.println(res);
 	}
 	
@@ -33,4 +33,17 @@ public class SongPair {
     	
     	return res;
     }
+    
+    public int numPairsDivisibleBy60_2(int[] time) {
+    	int[] c = new int[60];
+    	int res = 0;
+    	
+    	for (int t : time) {
+    		// (600 - t) % 60 returns the minimum number for t + number to be divisible by 60
+    		res += c[(600 - t) % 60];
+    		// increment the idx of 60 mod of t by one
+    		c[t % 60]++;
+    	}
+    	return res;
+    }    
 }
