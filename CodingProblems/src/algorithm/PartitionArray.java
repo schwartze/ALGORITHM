@@ -21,6 +21,9 @@ public class PartitionArray {
     	for (int n : A)
     		totalSum += n;
     	
+    	// When two groups of A make totalSum / 3, 
+    	// the sum of remaining group is automatically totalSum / 3
+    	// x + x + y = 3x -> y = x;
     	for (int i = 0; i < A.length; i++) {
     		sum += A[i];
     		
