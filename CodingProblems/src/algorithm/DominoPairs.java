@@ -22,39 +22,18 @@ public class DominoPairs {
 	// pairs are dominoes if and only if [a, b], [c, d]
 	// (a == c and b == d) o(r a == d and b == c)
     public int numEquivDominoPairs(int[][] dominoes) {
-    	Map<int[], Integer> map = new HashMap<>();
+    	Map<Integer, Integer> map = new HashMap<>();
     	int res = 0;
-    	map.put(dominoes[0], 1);
 
-    	for (int i = 1; i < dominoes.length; i++) {
-    		Map.Entry<int[], Integer> entry;
-			Iterator<Map.Entry<int[], Integer>> it;
-			
-			it = map.entrySet().iterator();
-			while (it.hasNext()) {
-				entry = it.next();
-
-				if (entry.getKey()[0] == dominoes[i][0] && entry.getKey()[1] == dominoes[i][1]) {
-					int count = entry.getValue();
-					entry.setValue(count + 1);
-					continue;
-				}
-				
-				if (entry.getKey()[0] == dominoes[i][1] && entry.getKey()[1] == dominoes[i][0]) {
-					int count = entry.getValue();
-					entry.setValue(count + 1);
-					continue;
-				}
-				map.put(dominoes[i], 1);
-			}
+    	for (int[] domino : dominoes) {
+    		int num = Math.max(domino[0], domino[1]) * 10 + Math.max(domino[1], domino[0]);
+    		map.put(num, map.getOrDefault(num, 0) + 1);
     	}
     	
-    	for (int[] key : map.keySet()) {
-    		int count = map.get(key);
-    		
-    		if (count > 1)
-    			res += (count * (count - 1)) / 2;
+    	for (int value : map.values()) {
+    		res += value * (value - 1) / 2;
     	}
+    	
     	return res;
     }
 }
