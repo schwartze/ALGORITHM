@@ -1,21 +1,20 @@
 package algorithm;
 
-import java.math.BigInteger;
-
 public class PrimeArrangement {
 
 	public static void main(String[] args) {
-		int n = 100;
+		int n = 5;
 		PrimeArrangement pArr = new PrimeArrangement();
-		System.out.println(pArr.numPrimeArrangements(n));
-		
+		 System.out.println(pArr.numPrimeArrangements(n));
 	}
 	
-	private BigInteger M = new BigInteger("1000000007");
+	private long M = 1000000007;
 	
 	// find the number of permutations of 1 to n so that prime numbers are at prime indices (1-indexed)
 	// since the answer may be large, return the answer in modulo 10^9 + 7
     public int numPrimeArrangements(int n) {
+    	if (n < 2)
+    		return 1;
     	int primeCount = 0;
     	int num = 1;
     	
@@ -25,20 +24,19 @@ public class PrimeArrangement {
     		num++;
     	}
     	
-    	BigInteger primeFact = getFactorial(primeCount);
-    	BigInteger nonPrimeFact = getFactorial(n - primeCount);
+    	long primeFact = getFactorial(primeCount);
+    	long nonPrimeFact = getFactorial(n - primeCount);
     	
-    	return Integer.parseInt(primeFact.multiply(nonPrimeFact).mod(M).toString());
+    	return (int)((primeFact * nonPrimeFact) % M);
     }
     
-    private BigInteger getFactorial(int n) {
-    	BigInteger res = new BigInteger(Integer.toString(n));
+    private long getFactorial(int n) {
+    	long res = n;
     	
     	while (--n > 0) {
-        	BigInteger num = new BigInteger(Integer.toString(n));
-    		res = res.multiply(num).mod(M);
+        	long num = n;
+        	res = (res * num) % M;
     	}
-    	
     	return res;
     }
     
