@@ -23,7 +23,7 @@ public class AbsDifference {
 		}
 	}
 
-    public List<List<Integer>> minimumAbsDifference2(int[] arr) {
+    public List<List<Integer>> minimumAbsDifference(int[] arr) {
     	List<List<Integer>> res = new ArrayList<List<Integer>>();
     	Map<Integer, Integer> map = new TreeMap<>();
     	int minDiff = Integer.MAX_VALUE;
@@ -49,6 +49,27 @@ public class AbsDifference {
 			res.add(subList);
     	}
 
+    	return res;
+    }
+    
+    public List<List<Integer>> minimumAbsDifference2(int[] arr) {
+    	List<List<Integer>> res = new ArrayList<>(arr.length);
+    	int minDiff = Integer.MAX_VALUE;
+    	Arrays.sort(arr);
+    	
+    	for (int i = 0; i < arr.length - 1; i++) {
+    		
+    		int min = arr[i + 1] - arr[i];
+    		
+    		if (min > minDiff)
+    			continue;
+    		
+    		if (min < minDiff)
+    			res.clear();
+    		
+    		minDiff = Math.min(minDiff, min);
+    		res.add(Arrays.asList(arr[i], arr[i + 1]));
+    	}
     	return res;
     }
 }
