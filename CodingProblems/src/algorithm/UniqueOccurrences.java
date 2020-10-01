@@ -19,14 +19,10 @@ public class UniqueOccurrences {
 	
     public boolean uniqueOccurrences(int[] arr) {
     	Map<Integer, Integer> map = new HashMap<>(arr.length);
-    	Set<Integer> set = new HashSet<>(map.size());
 
     	for (int n : arr)
     		map.put(n, map.getOrDefault(n, 0) + 1);
     	
-    	for (int value : map.values())
-    		set.add(value);
-    	
-    	return map.size() == set.size();
+    	return map.size() == new HashSet<>(map.values()).size();
     }
 }
