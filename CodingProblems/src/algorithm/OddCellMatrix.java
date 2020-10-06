@@ -3,14 +3,14 @@ package algorithm;
 public class OddCellMatrix {
 
 	public static void main(String[] args) {
-		int n = 2, m = 2;
+		int n = 2, m = 3;
 		int[][] indices = {
-				{1, 1},
-				{0, 0}
+				{0, 1},
+				{1, 1}
 		};
 		
 		OddCellMatrix oMatrix = new OddCellMatrix();
-		int res = oMatrix.oddCells(n, m, indices);
+		int res = oMatrix.getOddCellCount(n, m, indices);
 		System.out.println(res);
 	}
 	/*
@@ -19,7 +19,6 @@ public class OddCellMatrix {
 	 * you have to increment all cells in row ri and column ci by 1.
 	 * Return the number of cells with odd values in the matrix after applying the increment to all indices.
 	 */
-	
     public int oddCells(int n, int m, int[][] indices) {
     	int[][] matrix = new int[n][m];
     	int oddCount = 0;
@@ -44,5 +43,26 @@ public class OddCellMatrix {
     		}
     	}
     	return oddCount;
+    }
+    
+    
+    public int getOddCellCount(int n, int m, int[][] indices) {
+    	boolean[] rows = new boolean[n];
+    	boolean[] cols = new boolean[m];
+    	int rowCnt = 0, colCnt = 0;
+    	
+    	for (int i = 0; i < indices.length; i++) {
+    		
+    		rows[indices[i][0]] ^= true;
+    		cols[indices[i][1]] ^= true;
+    	}
+    	
+    	for (boolean isEven : rows) 
+    		rowCnt += isEven ? 1 : 0;
+    	
+    	for (boolean isEven : cols) 
+    		colCnt += isEven ? 1 : 0;
+    	
+    	return (n - rowCnt) * colCnt + (m - colCnt) * rowCnt;
     }
 }
