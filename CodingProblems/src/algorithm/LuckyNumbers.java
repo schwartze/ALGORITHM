@@ -21,7 +21,7 @@ public class LuckyNumbers {
 				{15, 16, 17, 12}
 		};
 		
-		List<Integer> res = luckyNumbers(matrix2);
+		List<Integer> res = luckyNums(matrix2);
 		
 		for (int n : res)
 			System.out.print(n + ", ");
@@ -53,5 +53,39 @@ public class LuckyNumbers {
     			res.add(key);
     	
     	return res;
+    }
+    
+    public static List<Integer> luckyNums (int[][] matrix) {
+    	List<Integer> res = new ArrayList<>();
+    	
+    	for (int row = 0; row < matrix.length; row++) {
+    		int minIdx = getMinInRow(matrix, row);
+    		int value = matrix[row][minIdx];
+    		
+    		if (isMaxInCol(matrix, value, minIdx)) 
+    			res.add(value);
+    	}
+    	return res;
+    }
+    
+    private static int getMinInRow(int[][] matrix, int row) {
+    	int min = Integer.MAX_VALUE; int minIdx = 0;
+    	
+    	for (int i = 0; i < matrix[row].length; i++) {
+    		if (min < matrix[row][i]) {
+    			min = matrix[row][i];
+    			minIdx = i;
+    		}
+    	}
+    	return minIdx;
+    }
+    
+    private static boolean isMaxInCol(int[][] matrix, int value, int col) {
+    	
+    	for (int i = 0; i < matrix.length; i++)
+    		if (matrix[i][col] > value)
+    			return false;
+    	
+    	return true;
     }
 }
