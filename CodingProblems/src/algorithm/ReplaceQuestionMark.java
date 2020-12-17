@@ -8,27 +8,36 @@ public class ReplaceQuestionMark {
 		String s2 = "??yw?ipkj?";
 		String s3 = "ubv?w";
 		String s4 = "??";
+		String s5 = "a?";
+		String s6 = "?";
 		
-		String res = modifyString(s);
+		String res = modifyString(s6);
 		System.out.println(res);
 	}
 	
     public static String modifyString(String s) {
     	StringBuilder sb = new StringBuilder(s);
-    	char tempChar = 'a';
     	
     	for (int i = 0; i < sb.length(); i++) {
     		if (sb.charAt(i) != 63)
     			continue;
-    		sb.replace(i, i + 1, Character.toString(tempChar));
-    		tempChar++;
-    		helper2(sb, i);
+    		sb.replace(i, i + 1, "a");
+    		
+    		if (sb.length() == 1)
+    			break;
+    		
+    		if (i == 0 || i == sb.length() - 1) {
+    			oneOrLast(sb, i);
+    			continue;
+    		}
+    		helper(sb, i);
     	}
     	return sb.toString();
     }
     
-    private static void helper(StringBuilder sb, int idx, int num) {
+    private static void oneOrLast(StringBuilder sb, int idx) {
     	char initialChar = sb.charAt(idx);
+    	int num = idx == 0 ? 1 : -1;
     	
     	if (sb.charAt(idx + num) == sb.charAt(idx)) {
     		boolean isConsecutive = true;
@@ -42,25 +51,13 @@ public class ReplaceQuestionMark {
     	}
     }
     
-    private static void helper2(StringBuilder sb, int idx) {
+    private static void helper(StringBuilder sb, int idx) {
     	char initialChar = sb.charAt(idx);
-    	int n1 = 1, n2 = -1;
-    	boolean notOneOrLast = true;
     	
-    	if (idx == 0) {
-    		n2 = 0;
-    		notOneOrLast = false;
-    	}
-
-    	if (idx == sb.length() - 1) {
-    		n1 = 0;
-    		notOneOrLast = false;
-    	}
-    	
-    	if ((sb.charAt(idx + n1) == sb.charAt(idx) || sb.charAt(idx + n2) == sb.charAt(idx)) && notOneOrLast) {
+    	if (sb.charAt(idx + 1) == sb.charAt(idx) || sb.charAt(idx - 1) == sb.charAt(idx)) {
     		boolean isConsecutive = true;
     		while(isConsecutive) {
-    			if (sb.charAt(idx + n1) != sb.charAt(idx) && sb.charAt(idx + n2) != sb.charAt(idx)) {
+    			if (sb.charAt(idx + 1) != sb.charAt(idx) && sb.charAt(idx - 1) != sb.charAt(idx)) {
     				isConsecutive = false;
     				break;
     			}
