@@ -12,8 +12,7 @@ public class ArrayFormation {
 		int[] arr2 = {1, 3, 5, 7};
 		int[][] pieces2 = {{2, 4, 6, 8}};
 
-		
-		boolean res = canFormArray(arr, pieces);
+		boolean res = canFormArray2(arr2, pieces2);
 		System.out.println(res);
 	}
 	
@@ -39,5 +38,39 @@ public class ArrayFormation {
     		}
     	}
     	return result;
+    }
+
+    public static boolean canFormArray2(int[] arr, int[][] pieces) {
+    	boolean[] temp = new boolean[arr.length];
+    	
+    	for (int[] piece : pieces) {
+    		int idx = getIndex(arr, piece[0]);
+    		
+    		if (idx == -1) 
+    			return false;
+    		
+    		temp[idx] = true;
+    		
+    		if (piece.length > 0) {
+    			for (int j = 1; j < piece.length; j++) {
+    				if (piece[j] == arr[++idx]) {
+    					temp[idx] = true;
+    				}
+    			}
+    		}
+    	}
+    	
+    	for (boolean formable : temp)
+    		if (!formable)
+    			return false;
+    	
+    	return true;
+    }
+    
+    private static int getIndex(int[] arr, int k) {
+    	for (int i = 0; i < arr.length; i++) 
+    		if (arr[i] == k) 
+    			return i;
+    	return -1;
     }
 }
