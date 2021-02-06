@@ -1,13 +1,27 @@
 package algorithm;
 
+import java.util.Stack;
+
 public class Subsequence {
 
 	public static void main(String[] args) {
-		String t = "abdhgc";
 		String s = "abc";
+		String t = "abdhgc";
+
+		String s2 = "abc";
+		String t2 = "ahbgdc";
+
+		String s3 = "axc";
+		String t3 = "ahbgdc";
 		
-		System.out.println(isSubsequence(s, t));
+		String s4 = "";
+		String t4 = "ahbgdc";
 		
+		String s5 = "b";
+		String t5 = "abc";
+		
+		
+		System.out.println(isSubsequence2(s5, t5));
 	}
 	
 	// method telling if s is a subsequence of t
@@ -30,5 +44,27 @@ public class Subsequence {
 		}
 		
 		return false;
+	}
+
+	
+	public static boolean isSubsequence2(String s, String t) {
+		if (s.isEmpty())
+			return true;
+		
+		if (t.isEmpty())
+			return false;
+		
+		Stack<Character> stack = new Stack<>();
+		int sIdx = 0;
+		
+		for (int i = 0; i < t.length() && sIdx < s.length(); i++) {
+			
+			if (t.charAt(i) != s.charAt(sIdx)) 
+				continue;
+
+			stack.push(t.charAt(i));
+			sIdx++;
+		}
+		return sIdx == s.length();
 	}
 }
