@@ -1,14 +1,18 @@
 package algorithm;
 
-import java.util.HashSet;
-
 public class FlowerBed {
 
 	public static void main(String[] args) {
-		int[] flowerbed = {1, 0, 0, 0, 0, 1};
+		int[] flowerbed = {1, 0, 0, 0, 1};
+		int[] flowerbed2 = {0, 0, 1, 0, 1}; // 1 
+		int[] flowerbed3 = {1, 0, 0, 0, 1, 0, 0};
+		int[] flowerbed4 = {0};
+		int[] flowerbed5 = {1, 0, 0, 0, 0, 1};
+		int[] flowerbed6 = {0, 1, 0};
+		
 		
 		FlowerBed fBed = new FlowerBed();
-		boolean result = fBed.canPlaceFlower(flowerbed, 2);
+		boolean result = fBed.canPlaceFlower(flowerbed6, 2);
 		System.out.println(result);
 	}
 	
@@ -18,19 +22,53 @@ public class FlowerBed {
 		// right next to the flower when placing a new flower 
 	public boolean canPlaceFlower(int[] flowerbed, int n) {
 		
-		int count = 0, i = 0;
-		
-		while (i < flowerbed.length) {
-			// for 0th array, does not have to check i - 1
-			// for (arr.length - 1)th array, does not have to check i + 1
-			if (flowerbed[i] == 0 && (i == 0 || flowerbed[i - 1] == 0) && 
-					(flowerbed.length - 1 == i || flowerbed[i + 1] == 0)) {
-				flowerbed[i] = 1;
-				count++;
+		for (int i = 0; i < flowerbed.length; i++) {
+			if (flowerbed[i] == 0 
+					&& (i == 0 || flowerbed[i - 1] == 0) 
+					&& (i == flowerbed.length - 1 || flowerbed[i + 1] == 0)) {
+				flowerbed[i]++;
+				n--;
 			}
-			i++;
 		}
+		
+		return n == 0;
+	}
 	
-		return count >= n;
+	public boolean canPlaceFlower3(int[] flowerbed, int n) {
+		
+		if (flowerbed.length == 1) {
+			return n == 0 || flowerbed[0] != n; 
+		}
+		
+		if (flowerbed.length == 2) {
+			return n == 0 || (flowerbed[0] == 0 && flowerbed[1] == 0 && n == 1); 
+		}
+		
+		// boolean placed = false;
+		for (int i = 0; i < flowerbed.length && n > 0; i++) {
+		
+			if (i == 0) {
+				if (flowerbed[i] == 0 && flowerbed[i + 1] == 0) {
+					flowerbed[i]++;
+					n--;
+				}
+				continue;
+			}
+			
+			if (i == flowerbed.length - 1) {
+				if (flowerbed[i] == 0 && flowerbed[i - 1] == 0) {
+					flowerbed[i]++;
+					n--;
+				}
+				continue;
+			}
+			
+			if (flowerbed[i] == 0 && flowerbed[i - 1] == 0 && flowerbed[i + 1] == 0) {
+				flowerbed[i]++;
+				n--;
+			}
+		}
+		
+		return n == 0;
 	}
 }
