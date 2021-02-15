@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class StringPattern {
 	
@@ -22,37 +23,28 @@ public class StringPattern {
 	 * A word matches the pattern if there exists a permutation of letters p so that after replacing every letter x in the pattern with p(x), we get the desired word.
 	 */
 	public static List<String> findAndReplacePattern(String[] words, String pattern) {
-		HashMap<Integer, Integer> map = new LinkedHashMap<>();
+		Map<Character, Character> map = new HashMap<>(); 
 		List<String> res = new ArrayList<>();
 		
-		int prev = 0;
-		for (int i = 0; i < pattern.length(); i++) {
-			if (pattern.charAt(i) == prev) {
-				map.put(i - 1, map.get(i - 1) + 1);
-				continue;
-			}
-				
-			map.put(i, 1);
-			prev = pattern.charAt(i);
-		}
-		
-		for (int i = 0; i < words.length; i++) {
+		for (String word : words) {
+			StringBuilder temp = new StringBuilder(word);
+			map.clear();
 			
-			for (int j = 0; j < words[i].length(); j++) {
-				int count = map.get(j);
-				int value = words[i].charAt(j);
-				boolean samePattern = true;
+			for (int i = 0; i < word.length(); i++) {
 				
-				for (int k = 0; k < count; k++) {
-					if (value != words[i].charAt(k)) {
-						samePattern = false;
+				if (map.containsKey(word.charAt(i))) {
+					if (map.get(word.charAt(i)) != pattern.charAt(i))
 						break;
-					}
+				} else {
+					if (map.containsValue(pattern.charAt(i)))
+						break;
+					map.put(word.charAt(i), pattern.charAt(i));
 				}
-				if (samePattern)
-					res.add(words[i]);
+				temp.setCharAt(i, map.get(word.charAt(i)));
 			}
+			if (pattern.equals(temp.toString())) 
+				res.add(word);
 		}
 		return res;
-    }
+	}
 }
