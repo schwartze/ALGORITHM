@@ -16,7 +16,15 @@ public class Submatrices {
 				  {1,1,0}
 			};
 		
-		int res = countSquares(matrix2);
+		int [][] matrix3 =
+			{
+				  {0, 1, 1, 1},
+				  {1, 1, 0, 1},
+				  {1, 1, 1, 1},
+				  {1, 0, 1, 0}
+			};
+		
+		int res = countSquares(matrix3);
 		System.out.println(res);
 	}
 
@@ -28,35 +36,34 @@ public class Submatrices {
     		for (int j = 0; j < matrix[i].length; j++) {
     			if (matrix[i][j] == 0)
     				continue;
-    			squares += helper(matrix, i, j);
+    			squares += helper(matrix, i, j, Math.min(matrix.length - i, matrix[i].length - j));
     		}
     	}
     	return squares;
     }
     
-    private static int helper(int[][] matrix, int col, int row) {
+    private static int helper(int[][] matrix, int i, int j, int min) {
     	int result = 1;
-    	int min = Math.min(matrix.length - col, matrix[0].length - row);
-    	int idx = 1;
-
-    	while (idx < min) {
-        	boolean isSquare = true;
-    
-    		for (int h = 0; h <= idx; h++) {
-        		
-        		for (int w = 0; w <= idx; w++) {
-        			if (idx > 1 && h < idx && w < idx)
-        				continue;
-        			
-        			if (matrix[h + col][w + row] == 0) {
-        				isSquare = false;
-        				break;
-        			}
-        		}
-        	}
-    		if (isSquare)
-    			result++;
-    		idx++;
+    	int idx = 0;
+    	
+    	while (++idx < min) {
+    		boolean isSquare = true;
+    		
+    		for (int col = 0; col <= idx; col++) {
+    			
+    			for (int row = 0; row <= idx; row++) {
+    				if (col < idx && row < idx)
+    					continue;
+    				
+    				if (matrix[col + i][row + j] != 1) {
+    					isSquare = false;
+    					break;
+    				}
+    			}
+    		}
+    		if (!isSquare)
+    			break;
+			result++;
     	}
     	return result;
     }
