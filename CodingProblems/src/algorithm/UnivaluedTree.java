@@ -1,8 +1,5 @@
 package algorithm;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class UnivaluedTree {
 
 	public static void main(String[] args) {
@@ -20,21 +17,17 @@ public class UnivaluedTree {
 	}
 	
     public boolean isUnivalTree(TreeNode root) {
-     
-    	Set<Integer> set = new HashSet<>();
-    	
-    	helper(root, set);
-    	
-    	return set.size() == 1;
+    	return helper(root, root.val);
     }
     
-    private void helper(TreeNode node, Set<Integer> set) {
-    	
+    private boolean helper(TreeNode node, int prevVal) {
     	if (node == null)
-    		return;
+    		return true;
     	
-    	helper(node.left, set);
-    	set.add(node.val);
-    	helper(node.right, set);
+    	if (node.val != prevVal)
+    		return false;
+    	
+    	return helper(node.left, node.val) && helper(node.right, node.val);
     }
+    
 }
