@@ -11,59 +11,32 @@ public class StringFromBinaryTree {
 		
 		
 		StringFromBinaryTree bTree = new StringFromBinaryTree();
-		String result = bTree.treeToString(root);
+		String result = bTree.tree2Str(root);
 		System.out.println(result);
 	}
 	
-    public String tree2str(TreeNode t) {
-        
-    	StringBuffer sb = new StringBuffer();
-    	
-    	helper(t, sb);
-    	
-    	return sb.toString().replace("()", "");
+    public String tree2Str(TreeNode t) {
+    	StringBuilder sb = new StringBuilder();
+    	constructStr(t, sb);
+    	return sb.toString();
     }
     
-    private void helper(TreeNode node, StringBuffer sb) {
+    private void constructStr(TreeNode node, StringBuilder sb) {
+    	sb.append(node.val);
     	
-    	if (node == null) 
-    		return;
+    	if (node.left != null) {
+    		sb.append("(");
+    		constructStr(node.left, sb);
+    		sb.append(")");
+    	}
     	
-    	sb.append(node.val + "(");
-    	helper(node.left, sb);
-    	sb.append(")(");
-    	helper(node.right, sb);
-    	sb.append(")");
+    	if (node.left == null && node.right != null)
+    		sb.append("()");
+    	
+    	if (node.right != null) {
+    		sb.append("(");
+    		constructStr(node.right, sb);
+    		sb.append(")");
+    	}
     }
-    
-    /*
-     * 4 cases to take into account 
-     * 
-     * case 1. when a node has both right and left nodes
-     * 
-     * case 2. when a node has neither right nor left node 
-     * 
-     * case 3. when a node has left node only
-     * --> need an empty () to represent left node of null
-     * 
-     * case 4. when a node has right node only 
-     */
-    
-    public String treeToString(TreeNode t) {
-    	
-    	if (t == null)
-    		return "";
-    	
-    	if (t.right == null && t.left == null)
-    		return t.val + "";
-
-    	// Thus, when t.left != null, 
-    	// process of checking right node is omitted 
-    	// no need to have an additional () for empty right node
-    	if (t.right == null)
-    		return "(" + treeToString(t.left) + ")" + t.val;
-    		
-    	return t.val + "(" + treeToString(t.left) + ")(" + treeToString(t.right) + ")";
-    }
-    
 }
