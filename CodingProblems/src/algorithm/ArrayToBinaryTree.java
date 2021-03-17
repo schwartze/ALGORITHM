@@ -14,9 +14,7 @@ public class ArrayToBinaryTree {
     	if (nums.length <= 0)
     		return null;
     	
-    	int min = 0;
-    	int max = nums.length;
-    	int mid = (max - min) / 2;
+    	int min = 0, max = nums.length, mid = (max - min) / 2;
     	
     	int[] left = Arrays.copyOfRange(nums, min, mid);
     	int[] right = Arrays.copyOfRange(nums, mid + 1, max);
