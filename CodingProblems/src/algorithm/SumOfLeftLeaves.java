@@ -9,7 +9,14 @@ public class SumOfLeftLeaves {
 		root.right.left = new TreeNode(15);
 		root.right.right = new TreeNode(7);
 		
-		System.out.println(getSum(root));
+		TreeNode root2 = new TreeNode(1);
+		root2.left = new TreeNode(2);
+		root2.right = new TreeNode(3);
+		root2.left.left = new TreeNode(4);
+		root2.left.right = new TreeNode(5);
+		
+		
+		System.out.println(sumOfLeftLeaves(root2));
 		
 	}
 	
@@ -31,4 +38,23 @@ public class SumOfLeftLeaves {
 		
 		return sum;
 	}
+
+	
+    public static int sumOfLeftLeaves(TreeNode root) {
+    	
+    	return helper(root, false);
+    }
+    
+    private static int helper(TreeNode node, boolean isLeft) {
+    	if (node == null)
+    		return 0;
+    	
+    	if (node.left == null && node.right == null && isLeft) 
+    		return node.val;
+
+    	int left = helper(node.left, true);
+    	int right = helper(node.right, false);
+    	
+    	return left + right;
+    }
 }
