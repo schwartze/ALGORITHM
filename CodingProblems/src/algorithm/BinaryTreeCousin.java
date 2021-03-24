@@ -18,47 +18,33 @@ public class BinaryTreeCousin {
 		boolean res = btCousin.isCousins(root, x, y);
 		System.out.println(res);
 	}
-	
-	// Returns true if and only if 
-	// #1. two nodes are in the same level
-	// #2. parent node of two nodes are different (cousin)
+    
     public boolean isCousins(TreeNode root, int x, int y) {
-    	Map<Integer, Integer> map = new HashMap<>();
-
-    	map.put(root.val, 0);
-    	helper(root, map);
-
-    	hasSameParent(root, x, y);
+    	int[] xArr = new int[2];
+    	int[] yArr = new int[2];
     	
-    	return map.get(x) == map.get(y) && !hasSameParent(root, x, y);
+    	helper(root, x, xArr, 0);
+    	helper(root, y, yArr, 0);
+    	
+    	return xArr[0] != yArr[0] && xArr[1] == yArr[1];
     }
     
-    private boolean hasSameParent(TreeNode node, int x, int y) {
-    	
-    	if (node == null)
-    		return false;
-    	
-    	if (node.left != null && node.right != null) {
-    		if ((node.left.val == x && node.right.val == y) || 
-    				(node.left.val == y && node.right.val == x))
-    			return true;
-    	}
-
-    	return hasSameParent(node.left, x, y) || hasSameParent(node.right, x, y);
-    }
-    
-    private void helper(TreeNode node, Map<Integer, Integer> map) {
-    	
+    private void helper(TreeNode node, int value, int[] arr, int depth) {
     	if (node == null)
     		return;
     	
-    	if (node.left != null)
-    		map.put(node.left.val, map.get(node.val) + 1);
-
-    	if (node.right != null)
-    		map.put(node.right.val, map.get(node.val) + 1);
-
-    	helper(node.left, map);
-    	helper(node.right, map);
+    	if (node.left != null && node.left.val == value) {
+    		arr[0] = node.val;
+    		arr[1] = depth + 1;
+    		return;
+    	}
+    	
+    	if (node.right != null && node.right.val == value) {
+    		arr[0] = node.val;
+    		arr[1] = depth + 1;
+    		return;
+    	}
+    	helper(node.left, value, arr, depth + 1);
+    	helper(node.right, value, arr, depth + 1);
     }
 }
