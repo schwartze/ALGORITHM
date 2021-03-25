@@ -12,44 +12,32 @@ public class DiameterOfBinaryTree {
 		
 		
 		DiameterOfBinaryTree diameter = new DiameterOfBinaryTree();
-		int result = diameter.getDiameterOfTree(root);
+		int result = diameter.diameterOfBinaryTree(root);
 		System.out.println(result);
 		
 	}
-	int max = 0;
-	int count = 0;
-	
-	public void helper(TreeNode root) {
-		
-		if (root == null)
-			return;
-		
-		if (root.left != null && root.right != null)
-			count--;
-		count++;
-		helper(root.left);
-		helper(root.right);
-	}
-	
-	
-	public int getDiameterOfTree(TreeNode root) {
-		
-		maxDepth(root);
-		
-		return max;
-	}
-	
-	private int maxDepth(TreeNode node) {
-		
-		if (node == null)
-			return 0;
-		
-		int left = maxDepth(node.left);
-		int right = maxDepth(node.right);
-			
-		max = Math.max(max, left + right);
-		
-		return Math.max(left, right) + 1;
-	}
-
+    int maxDepth = 0;
+    
+    public int diameterOfBinaryTree(TreeNode root) {
+    	helper(root);
+    	return maxDepth;
+    }
+    
+    private void helper(TreeNode node) {
+    	if (node == null)
+    		return;
+    	
+    	int leftMaxDepth = getDepth(node.left, 0);
+    	int rightMaxDepth = getDepth(node.right, 0);
+    	maxDepth = Math.max(maxDepth, leftMaxDepth + rightMaxDepth);
+    	
+    	helper(node.left);
+    	helper(node.right);
+    }
+    
+    private int getDepth(TreeNode node, int depth) {
+    	if (node == null)
+    		return depth;
+    	return Math.max(getDepth(node.left, depth + 1), getDepth(node.right, depth + 1));
+    }
 }
