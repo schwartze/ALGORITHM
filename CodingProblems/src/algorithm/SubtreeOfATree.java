@@ -1,10 +1,5 @@
 package algorithm;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-
 public class SubtreeOfATree {
 
 	public static void main(String[] args) {
@@ -16,35 +11,41 @@ public class SubtreeOfATree {
 		
 		TreeNode root2 = new TreeNode(4);
 		root2.left = new TreeNode(1);
-		root2.right = new TreeNode(5);
+		root2.right = new TreeNode(2);
+		
+		TreeNode root3 = new TreeNode(1);
+		root3.left = new TreeNode(1);
+		
+		TreeNode root4 = new TreeNode(1);
 		
 		SubtreeOfATree subtree = new SubtreeOfATree();
-		boolean result = subtree.isSubtree(root1, root2);
+		boolean result = subtree.isSubtree(root3, root4);
 		System.out.println(result);
 	}
-	// t is a subtree of s only if they have the same structure and values for nodes 
+	
     public boolean isSubtree(TreeNode s, TreeNode t) {
+    	if (s == null)
+    		return false;
     	
-    	StringBuffer treeS = new StringBuffer();
-    	StringBuffer treeT = new StringBuffer();
-    	
-    	preorder(s, treeS);
-    	preorder(t, treeT);
-
-    	return treeS.toString().indexOf(treeT.toString()) >= 0;
+    	boolean result = false;
+		if (s.val == t.val) {
+    		result = helper(s, t);
+    	}
+		
+    	return result || isSubtree(s.left, t) || isSubtree(s.right, t);
     }
-
-	private String preorder(TreeNode node, StringBuffer sb) {
-		
-		if (node == null)
-			return "null ";
-		
-		sb.append("#" + node.val + " ");
-		
-		preorder(node.left, sb);
-		preorder(node.right, sb);
-		
-		return sb.toString();
-	}
-
+    
+    private boolean helper(TreeNode s, TreeNode t) {
+    	if (s == null && t == null)
+    		return true;
+    	
+    	if (s == null || t == null)
+    		return false;
+    	
+    	if (s.val != t.val)
+    		return false;
+    	
+    	return helper(s.left, t.left) && helper(s.right, t.right);
+    }
+    
 }
