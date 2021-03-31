@@ -1,6 +1,8 @@
 package algorithm;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FindModeOfTree {
@@ -12,38 +14,39 @@ public class FindModeOfTree {
 		
 		
 		FindModeOfTree mode = new FindModeOfTree();
-		int result = mode.getMode(root);
+		int[] result = mode.findMode(root);
 		System.out.println(result);
 	}
 	
-	public int getMode(TreeNode root) {
-		
-		HashMap<Integer, Integer> map = new HashMap<>();
-		map.put(root.val, 1);
-		
-		scanNode(root.left, map);
-		scanNode(root.right, map);
-		
-		int max = Integer.MIN_VALUE;
-		
-		for (Map.Entry<Integer, Integer> m: map.entrySet()) {
-			
-			if (m.getValue() > max)
-				max = m.getValue();
-		}
-			
-		return map.get(max);
-	}
-	
-	private void scanNode(TreeNode node, HashMap<Integer, Integer> map) {
-		
-		if (node == null)
-			return;
-		
-		int count = map.getOrDefault(node.val, 0);
-		map.put(node.val, ++count);
-		
-		scanNode(node.left, map);
-		scanNode(node.right, map);
-	}
+    public int[] findMode(TreeNode root) {
+    	Map<Integer, Integer> nodeMap = new HashMap<>();
+    	helper(root, nodeMap);
+
+    	int max = 0;
+    	for (int count : nodeMap.values()) 
+    		if (count >= max) 
+    			max = count;
+    	
+    	List<Integer> list = new ArrayList<>();
+    	
+    	for (int key : nodeMap.keySet())
+    		if (nodeMap.get(key) == max)
+    			list.add(key);
+    	
+    	int[] result = new int[list.size()];
+    	
+    	for (int i = 0; i < list.size(); i++)
+    		result[i] = list.get(i);
+    	
+    	return result;
+    }
+    
+    private void helper(TreeNode node, Map<Integer, Integer> map) {
+    	if (node == null)
+    		return;
+    	
+    	map.put(node.val, map.getOrDefault(node.val, 0) + 1);
+    	helper(node.left, map);
+    	helper(node.right, map);
+    }
 }
