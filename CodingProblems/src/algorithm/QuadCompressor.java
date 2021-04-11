@@ -18,78 +18,55 @@ public class QuadCompressor {
 				{0,0,0,0,1,0,0,1},
 				{0,0,0,0,1,1,1,1}
 			};
-		int[] res = solution(arr2);
+		int[] res = solution(arr);
 		
 		System.out.println(res[0] + ", " + res[1]);
 	}
 	
     public static int[] solution(int[][] arr) {
         int[] answer = new int[2];
-        Map<int[], int[]> map = new HashMap<>();
-        int size = arr.length; 
         
-        for (int i = size / 2; i / 2 >= 0; i-=2) {
-        	
-        	int w = 0, h = 0, len = i == 0 ? 1 : i;
-        	
-        	for (int j = 0; j < (size * size) / (len * len); j++) {
-        		int[] pos = {w, h};
-        		
-        		if (hasCompressed(map, pos)) {
-            		h += len;
-            		if (h == size) {
-            			h = 0;
-            			w += len;
-            		}
-        			continue;
-        		}
-        		
-        		int[] countArr = compress(arr, pos, len);
-        		
-        		if (countArr[0] == 0) {
-        			map.put(pos, new int[] {len, 1});
-        		}
-        		
-        		if (countArr[1] == 0) {
-        			map.put(pos, new int[] {len, 0});
-        		}
-        		
-        		h += len;
-        		if (h == size) {
-        			h = 0;
-        			w += len;
-        		}
-        	}
-        }
+        compress(arr, new int[] {0, 0}, arr.length, answer);
         
-        for (int[] arrRes : map.values()) {
-        	answer[arrRes[1]]++;
-        }
         return answer;
     }
     
-    private static boolean hasCompressed(Map<int[], int[]> map, int[] pos) {
+    private static void compress(int[][] arr, int[] pos, int length, int[] ans) {
+    	int zeroCount = 0, oneCount = 0;
+    	boolean compressible = true;
     	
-    	for (int[] compressedArea : map.keySet()) {
-    		int compSize = map.get(compressedArea)[0] - 1;
-    		
-    		if (compressedArea[0] <= pos[0] && pos[0] <= compressedArea[0] + compSize && 
-    				compressedArea[1] <= pos[1] && pos[1] <= compressedArea[1] + compSize) {
-    			return true;
+    	for (int i = pos[0]; i < pos[0] + length; i++) {
+    		for (int j = pos[1]; j < pos[1] + length; j++) {
+    			if (arr[i][j] == 0)
+    				zeroCount++;
+    			else 
+    				oneCount++;
+    			
+    			if (zeroCount > 0 && oneCount > 0) {
+    				compressible = false;
+					break;
+    			}
     		}
+    		if (!compressible)
+    			break;
     	}
     	
-    	return false;
-    }
-    
-    private static int[] compress(int[][] arr, int[] startPos, int length) {
-    	int[] numCount = new int[2];
-    	
-    	for (int i = startPos[0]; i < startPos[0] + length; i++) {
-    		for (int j = startPos[1]; j < startPos[1] + length; j++) {
-				numCount[arr[i][j]]++;
-    		}
+    	if (zeroCount == 0) {
+    		ans[1]++;
+    		return;
     	}
-    	return numCount;
+
+    	if (oneCount == 0) {
+    		ans[0]++;
+    		return;
+    	}
+    	
+    	length /= 2;
+		for (int i = pos[0]; i < arr.length; i+=length) {
+			
+			for (int j = pos[1]; j < arr[i].length; j+=length) {
+				compress(arr, new int[] {i, j}, length, ans);
+			}
+    	}
     }
 }
