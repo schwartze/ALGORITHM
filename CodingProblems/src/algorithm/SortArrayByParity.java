@@ -31,4 +31,20 @@ public class SortArrayByParity {
     	
     	return B;
     }
+
+    
+    public int[] sortByParity(int[] A) {
+    	int[] res = new int[A.length];
+    	
+    	for (int i = 0, j = A.length - 1, k = 0; k < A.length; k++) {
+    		
+    		if (A[k] % 2 == 0) {
+    			res[i++] = A[k];
+    		} else {
+    			res[j++] = A[k];
+    		}
+    	}
+    	
+    	return res;
+    }
 }
