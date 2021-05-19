@@ -6,11 +6,17 @@ public class ValidParanthesisString {
 
 	public static void main(String[] args) {
 		String s = "{}([])";
+		String s2 = "[(])";
+		String s3 = "({[]})}{";
+		String s4 = "(){[()]}][";
+		String[] sArr = {"({)}", "([)]", "{(})", "{[}]", "[(])", "[{]}"};
 		
 		ValidParanthesisString vps = new ValidParanthesisString();
 		
-		int res = vps.solution(s);
-		System.out.println(res);
+		for (String str : sArr) {
+			int res = vps.solution(str);
+			System.out.println(res);
+		}
 	}
 	
     public int solution(String s) {
