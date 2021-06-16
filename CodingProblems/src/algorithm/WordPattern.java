@@ -11,7 +11,7 @@ public class WordPattern {
 		
 		// System.out.println(hasSamePattern(pattern, str));
 		
-		System.out.println(wordPattern(pattern, str));
+		System.out.println(samePattern(pattern, str));
 	}
 	
 	public static boolean hasSamePattern(String pattern, String str) {
@@ -77,5 +77,23 @@ public class WordPattern {
 	    }
 	    
 	    return true;
+	}
+
+	public static boolean samePattern(String pattern, String str) {
+		String[] strArr = str.split(" ");
+		Map<Character, String> map = new HashMap<>();
+		
+		for (int i = 0; i < pattern.length(); i++) {
+			
+			if (map.containsKey(pattern.charAt(i))) {
+				if (!map.get(pattern.charAt(i)).equals(strArr[i])) {
+					return false;
+				}
+				continue;
+			}
+			map.put(pattern.charAt(i), strArr[i]);
+		}
+		
+		return true;
 	}
 }
