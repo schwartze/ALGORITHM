@@ -18,24 +18,14 @@ public class MoveChips {
 	}
 	
     public static int minCostToMoveChips(int[] position) {
-    	Map<Integer, Integer> map = new HashMap<>();
-    	
-    	for (int chip : position) 
-    		map.put(chip, map.getOrDefault(chip, 0) + 1);
-    	
-    	Integer[] keyArr = map.keySet().toArray(new Integer[map.keySet().size()]);
-    	int evenCost = 0, oddCost = 0;
-    	int num = keyArr[0];
-    	
-    	while (num <= keyArr[keyArr.length - 1]) {
-    		if (map.containsKey(num))
-    			evenCost += map.get(num);
-    		
-    		if (map.containsKey(num + 1))
-        		oddCost += map.get(num + 1);
-    		num += 2;
-    	}
-
-    	return evenCost > oddCost ? oddCost : evenCost;
+		int odd = 0, even = 0;
+		
+		for (int idx : position) {
+			if (idx % 2 == 0)
+				even++;
+			else 
+				odd++;
+		}
+		return even > odd ? odd : even;
     }
 }
