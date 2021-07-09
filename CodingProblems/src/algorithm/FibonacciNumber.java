@@ -4,7 +4,7 @@ public class FibonacciNumber {
 
 	public static void main(String[] args) {
 		FibonacciNumber fNum = new FibonacciNumber();
-		int result = fNum.fibNum(3);
+		int result = fNum.fibonacci(3);
 		System.out.println(result);
 	}
 	
@@ -19,6 +19,15 @@ public class FibonacciNumber {
 			return N;
 		
 		return fib(N - 1) + fib(N - 2);
+    }
+
+
+	// #1. recursive method review
+    public int fibonacci(int N) {
+    	if (N <= 1)
+    		return N;
+    	
+    	return fibonacci(N - 1) + fibonacci(N - 2);
     }
 
 	// #2. iterative method
