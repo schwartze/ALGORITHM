@@ -1,6 +1,7 @@
 package algorithm;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -41,6 +42,30 @@ public class PowerValue {
     	}
     	
     	return step;
+    }
+    
+    public int getKth2(int lo, int hi, int k) {
+        int[][] arr = new int[hi - lo + 1][2];
+    	
+    	for (int i = lo, j = 0; i < hi + 1; i++, j++) {
+    		int powerValue = getPowerValue2(i);
+    		arr[j] = new int[] {powerValue, i}; 
+    	}
+    	
+    	Arrays.sort(arr, (a, b) -> a[0] - b[0]);
+    	
+    	return arr[k - 1][1];
+    }
+    
+    private int getPowerValue2(int n) {
+    	int count = 0;
+    	
+    	while (n > 1) {
+    		n = n % 2 == 0 ? n / 2 : 3 * n + 1;
+    		count++;
+    	}
+    	
+    	return count;
     }
    
 }
