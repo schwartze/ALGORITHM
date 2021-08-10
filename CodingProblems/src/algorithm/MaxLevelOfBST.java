@@ -19,8 +19,15 @@ public class MaxLevelOfBST {
 		root2.right.right = new TreeNode(-89388);
 		root2.right.right.right = new TreeNode(-32127);
 		
+		TreeNode root3 = new TreeNode(-100);
+		root3.left = new TreeNode(-200);
+		root3.right = new TreeNode(-300);
+		root3.left.left = new TreeNode(-20);
+		root3.left.right = new TreeNode(-5);
+		root3.right.left = new TreeNode(-10);
+		
 		MaxLevelOfBST maxLevel = new MaxLevelOfBST();
-		int res = maxLevel.maxLevelSum(root2);
+		int res = maxLevel.maxLevelSum(root3);
 		System.out.println(res);
 	}
 
@@ -28,7 +35,7 @@ public class MaxLevelOfBST {
     	List<Integer> nodeSumList = new ArrayList<>();
     	getMaxSumLevel(root, 1, nodeSumList);
     	
-    	int maxLevel = 0, max = 0;
+    	int maxLevel = 0, max = Integer.MIN_VALUE;
     	
     	for (int i = 0; i < nodeSumList.size(); i++) {
     		if (nodeSumList.get(i) > max) {
