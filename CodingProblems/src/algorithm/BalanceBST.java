@@ -1,7 +1,6 @@
 package algorithm;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class BalanceBST {
@@ -24,45 +23,33 @@ public class BalanceBST {
 		bBST.balanceBST(root);
 	}
 	
-    public TreeNode balanceBST(TreeNode root) {
-        List<Integer> valueList = new ArrayList<>();
-    	getAllValues(root, valueList);
-    	Collections.sort(valueList);
-    	
-    	int mid = valueList.size() / 2 - 1;
-    	TreeNode newNode = new TreeNode(valueList.get(mid));
-    	buildBalancedBST(newNode, valueList, 0, mid);
-    	buildBalancedBST(newNode, valueList, mid, valueList.size());
-    	
-    	return newNode;
+	public TreeNode balanceBST(TreeNode root) {
+		List<TreeNode> nodeList = new ArrayList<>();
+		traverseTree(root, nodeList);
+		return buildTree(0, nodeList.size() - 1, nodeList);
     }
-    
-    private void buildBalancedBST(TreeNode node, List<Integer> list, int l, int r) {
-    	if (l >= r || node == null || r == 0)
-    		return;
-    	
-    	int mid = l == 0 ? ((r - l) / 2) : ((r - l) / 2 + l);
-    	if (list.get(mid) < 0)
-    		return;
-    	TreeNode temp = null;
-    	if (node.val > list.get(mid)) {
-    		temp = new TreeNode(list.get(mid));
-    		node.left = temp;
-    	} else {
-    		temp = new TreeNode(list.get(mid));
-    		node.right = temp;
-    	}
-    	list.set(mid, -1);
-		buildBalancedBST(temp, list, l, mid);
-		buildBalancedBST(temp, list, mid, r);
-    }
-    
-    private void getAllValues(TreeNode node, List<Integer> list) {
-    	if (node == null)
-    		return;
-    	
-    	list.add(node.val);
-    	getAllValues(node.left, list);
-    	getAllValues(node.right, list);
-    }
+	
+	private void traverseTree(TreeNode node, List<TreeNode> nodeList) {
+		if (node == null)
+			return;
+		
+		traverseTree(node.left, nodeList);
+		nodeList.add(node);
+		traverseTree(node.right, nodeList);
+	}
+	
+	private TreeNode buildTree(int start, int end, List<TreeNode> nodeList) {
+		if (start > end)
+			return null;
+		
+		int mid = (start + end) / 2;
+		TreeNode root = nodeList.get(mid);
+		
+		TreeNode left = buildTree(start, mid - 1, nodeList);
+		TreeNode right = buildTree(mid + 1, end, nodeList);
+		root.left = left;
+		root.right = right;
+		
+		return root;
+	}
 }
