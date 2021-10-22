@@ -15,7 +15,7 @@ public class MergeLinkedList {
 		node2.next = new ListNode(1000001);
 		node2.next.next = new ListNode(1000003);
 		
-		ListNode res = mergeInBetween(node1, a, b, node2);
+		ListNode res = mergeInBetween2(node1, a, b, node2);
 		
 		while (res != null) {
 			System.out.print(res.val + ", ");
@@ -39,6 +39,36 @@ public class MergeLinkedList {
     		temp = temp.next;
     	}
     	temp.next = end.next;
+    	
+    	return list1;
+    }
+
+
+    public static ListNode mergeInBetween2(ListNode list1, int a, int b, ListNode list2) {
+    	ListNode curr = list1.next;
+    	ListNode prev = list1;
+    	boolean removable = false;
+    	
+    	while (curr != null) {
+    		
+    		if (curr.val == a) {
+    			prev.next = list2;
+    			while (prev.next != null) {
+    				prev = prev.next;
+    	    	}
+    			removable = true;
+    		}
+    		
+    		if (curr.val == b) {
+    			prev.next = curr.next;
+    			break;
+    		}
+    		
+    		if (!removable) {
+    			prev = prev.next;
+    		}
+    		curr = curr.next;
+    	}
     	
     	return list1;
     }
