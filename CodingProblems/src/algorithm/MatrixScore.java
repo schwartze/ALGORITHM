@@ -67,4 +67,22 @@ public class MatrixScore {
     			A[0][col] = 1;
     	}
     }
+    
+
+    public int matrixScoreOptimized(int[][] A) {
+    	int result = 0;
+    	
+    	result += (1 << A[0].length - 1) * A.length;
+    	
+    	for (int j = 1; j < A[0].length; j++) {
+    		int count = 0;
+    		for (int i = 0; i < A.length; i++) {
+    			if (A[i][j] == 1)
+    				count++;
+    		}
+    		result += (1 << A[0].length - 1 - j) * Math.max(count, A.length - count); 
+    	}
+    	
+    	return result;
+    }
 }
