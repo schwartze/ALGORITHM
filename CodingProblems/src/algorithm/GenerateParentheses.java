@@ -6,24 +6,29 @@ import java.util.List;
 public class GenerateParentheses {
 	
 	public static void main(String[] args) {
-		generateParenthesis(3);
+		List<String> result = generateParenthesis(3);
+		result.forEach(System.out::println);
 	}
-
+    
     public static List<String> generateParenthesis(int n) {
-    	List<String> list = new ArrayList<>();
-    	helper(list, "", 0, 0, n);
-    	return list;
+    	List<String> result = new ArrayList<>();
+    	helper( result, "", 0, 0, n );
+    	return result;
     }
     
-    private static void helper(List<String> list, String str, int open, int close, int max) {
-    	if (str.length() == max * 2) {
-    		list.add(str);
+    private static void helper( List<String> result, String str, int open, int close, int n ) {
+    	
+    	if ( open == n && close == n ) {
+    		result.add( str );
     		return;
     	}
     	
-    	if (open < max)
-    		helper(list, str + "(", open + 1, close, max);
-    	if (close < open)
-    		helper(list, str + ")", open, close + 1, max);
+    	if ( open < n ) {
+    		helper( result, str + "(", open + 1, close, n );
+    	}
+    	
+    	if ( open > close ) {
+    		helper( result, str + ")", open, close + 1, n );
+    	}
     }
 }
