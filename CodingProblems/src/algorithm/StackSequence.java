@@ -11,7 +11,7 @@ public class StackSequence {
 		int[] pushed2 = {1, 2, 3, 4, 5};
 		int[] popped2 = {4, 5, 3, 2, 1};
 		
-		boolean res = validateStackSequences(pushed2, popped2);
+		boolean res = isValidStack(pushed, popped);
 		System.out.println(res);
 	}
 	
@@ -29,5 +29,25 @@ public class StackSequence {
     	}
     	
     	return stack.empty();
+    }
+
+
+    
+    public static boolean isValidStack(int[] pushed, int[] popped) {
+    	Stack<Integer> stack = new Stack<>();
+    	int pushedIdx = 0;
+    	int poppedIdx = 0;
+    	
+    	while ( pushedIdx < pushed.length ) {
+			stack.push( pushed[ pushedIdx ] );
+			
+			while ( !stack.isEmpty() && stack.peek() == popped[ poppedIdx ] ) {
+				stack.pop();
+				poppedIdx++;
+			}
+			pushedIdx++;
+    	}
+    	
+    	return stack.isEmpty();
     }
 }
