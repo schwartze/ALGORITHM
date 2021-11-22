@@ -1,6 +1,8 @@
 package algorithm;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class QueueReconstruction {
 	
@@ -51,6 +53,46 @@ public class QueueReconstruction {
     		}
     	}
     	
+    	return res;
+    }
+
+    
+    public int[][] reconstructQueue2(int[][] people) {
+    	Arrays.sort(people, (a, b) -> a[1] == b[1] ? a[0] - b[0] : a[1] - b[1]);
+    	
+    	List<int[]> peopleList = new ArrayList<>();
+    	
+    	for (int[] person : people) {
+    		
+    		if (peopleList.size() == 0) {
+    			peopleList.add(person);
+    			continue;
+    		}
+    		int numOfTallerPerson = 0; 
+    		
+    		for (int i = 0; i < peopleList.size(); i++) {
+    			int[] curr = peopleList.get(i);
+    			
+    			if (curr[0] > person[0]) {
+    				numOfTallerPerson++;
+    			}
+    			
+    			if (numOfTallerPerson == curr[1]) {
+    				
+    				if (peopleList.size() > i) {
+        				peopleList.add(i, curr);;
+    				} else {
+    					peopleList.add(curr);
+    				}
+    			}
+    			
+    		}
+    	}
+    	
+    	int[][] res = new int[peopleList.size()][2];
+    	for (int i = 0; i < peopleList.size(); i++) {
+    		res[i] = peopleList.get(i);
+    	}
     	return res;
     }
 }
