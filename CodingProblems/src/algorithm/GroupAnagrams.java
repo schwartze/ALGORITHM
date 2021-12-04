@@ -1,46 +1,47 @@
 package algorithm;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GroupAnagrams {
+	
+	public static void main(String[] args) {
+		String[] strs = {"eat","tea","tan","ate","nat","bat"};
+		String[] strs2 = {"ddddddddddg","dgggggggggg"};
+		
+		GroupAnagrams anagrams = new GroupAnagrams();
+		List<List<String>> result =  anagrams.groupAnagrams(strs);
+		
+		for (List<String> list : result) {
+			for (String s : list) {
+				System.out.print(s + ", ");
+			}
+			System.out.println();
+		}
+	}
+	
 
     public List<List<String>> groupAnagrams(String[] strs) {
-    	List<List<String>> result = new ArrayList<>();
+    	if (strs == null || strs.length == 0)
+    		return new ArrayList<>();
+    	
+    	Map<String, List<String>> map = new HashMap<>();
     	
     	for (String str : strs) {
+    		char[] charArr = new char[26];
     		
-    		if (result.size() == 0) {
-    			List<String> arr = new ArrayList<>();
-    			arr.add(str);
-    			result.add(arr);
-    			continue;
-    		} 
-    		
-    		for (List<String> strList  : result) {
-    			if (isAnagram(strList.get(0), str)) {
-    				strList.add(str);
-    			} else {
-        			List<String> arr = new ArrayList<>();
-        			arr.add(str);
-        			result.add(arr);
-    			}
+    		for (char c : str.toCharArray()) {
+    			charArr[c - 'a']++;
     		}
+    		String keyStr = String.valueOf(charArr);
+    		if (!map.containsKey(keyStr)) {
+    			map.put(keyStr, new ArrayList<>());
+    		}
+    		map.get(keyStr).add(str);
     	}
-    	return result;
+    	return new ArrayList<>(map.values());
     }
     
-    private boolean isAnagram(String str1, String str2) {
-    	
-    	if (str1.length() != str2.length())
-    		return false;
-    	
-    	for (char c : str1.toCharArray()) {
-    		if (str2.indexOf(c) < 0) {
-    			return false;
-    		}
-    	}
-    	
-    	return true;
-    }
 }
